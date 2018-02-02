@@ -2,17 +2,31 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './css/pure-min.css';
 import './css/side-menu.css';
+import $ from 'jquery';
 
 class App extends Component {
   
   constructor() {
     super();
-    this.state = {lista : [{nome:'Lorhana', email:'lortrindade@lyseon.tech', senha:'123456'}]};
+    this.state = {lista : []};
+
+  }
+
+  ComponentWillMount() {
+    $.ajax({
+      url:"localhost:8080/api/autores",
+      dataType: 'json',
+      success:function(resposta) {
+        console.log(resposta);
+        this.setState({lista:resposta});
+        }.bind(this)
+      }
+    );
   }
 
   render() {
     return (
-      <div classNameName="App">
+      <div className="App">
         <div id="layout">
               <a href="#menu" id="menuLink" className="menu-link">
                   <span></span>
@@ -20,12 +34,12 @@ class App extends Component {
 
               <div id="menu">
                   <div className="pure-menu">
-                      <a className="pure-menu-heading" href="#">CDC-Admin</a>
+                      <a className="pure-menu-heading" href="">CDC-Admin</a>
 
                       <ul className="pure-menu-list">
-                          <li className="pure-menu-item"><a href="#" className="pure-menu-link">Home</a></li>
-                          <li className="pure-menu-item"><a href="#" className="pure-menu-link">Autor</a></li>
-                          <li className="pure-menu-item"><a href="#" className="pure-menu-link">Livro</a></li>
+                          <li className="pure-menu-item"><a href="" className="pure-menu-link">Home</a></li>
+                          <li className="pure-menu-item"><a href="" className="pure-menu-link">Autor</a></li>
+                          <li className="pure-menu-item"><a href="" className="pure-menu-link">Livro</a></li>
 
                           
 
@@ -42,11 +56,11 @@ class App extends Component {
                 <form className="pure-form pure-form-aligned">
                   <div className="pure-control-group">
                     <label htmlFor="nome">Nome</label> 
-                    <input id="nome" type="text" name="nome" value=""  />                  
+                    <input id="nome" type="text" name="nome"   />                  
                   </div>
                   <div className="pure-control-group">
                     <label htmlFor="email">Email</label> 
-                    <input id="email" type="email" name="email" value=""  />                  
+                    <input id="email" type="email" name="email"   />                  
                   </div>
                   <div className="pure-control-group">
                     <label htmlFor="senha">Senha</label> 
@@ -72,8 +86,7 @@ class App extends Component {
                         this.state.lista.map(function(autor){
                           return (
                               <tr>
-                                <td>{autor.nome}</td>
-                                <td>{autor.email}</td>
+                                
                               </tr>
                             );
                         })
